@@ -9,13 +9,13 @@ deploymentType: "build"
 buildConfig:
   triggerBuild:
     enabled: false             # Enable or disable the build trigger Job for argocd
-  gitUri: ""                  # URL of the git repository
+  gitUri: "https://github.com/brian316/Demo-Mesh-Predictor.git"                  # URL of the git repository
   gitRef: "main"              # Branch of the git repository
   contextDir: ""
   strategy: Docker
   dockerfilePath: Dockerfile  # Path to the Dockerfile
   sourceSecret:               # Secret containing the SSH keys
-    type: "ssh"               # "ssh" or "pat (github personal access token)"
+    type: ""               # "ssh" or "pat (github personal access token)"
     name: ""                  # Name of the secret
 
 # Image settings (used when deploymentType: "image")

@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-wrapper
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: 'x'
+    targetRevision: main
+    path: charts/test-wrapper
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: redis
+  syncPolicy:
+    automated: {}
+    # syncOptions:
+    #   - Prune=false
+  ignoreDifferences: # ignore differences in image tag to avoid constant out-of-sync status
+    - group: apps
+      kind: Deployment
+      name: test-wrapper
+      jqPathExpressions:
+        - '.spec.template.spec.containers[] | select(.name == "test-wrapper") | .image'

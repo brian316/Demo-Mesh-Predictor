@@ -64,4 +64,4 @@ DemoMeshPredictor.register(no_model=True)
 
 if __name__ == "__main__":
     from openad_service_utils import start_server
-    start_server(port=8081, reload=True)
+    start_server(port=8080, reload=True)

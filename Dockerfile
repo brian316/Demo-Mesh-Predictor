@@ -18,13 +18,6 @@ ENV PATH="/root/.local/bin:$PATH"
 # Copy project files
 COPY pyproject.toml uv.lock .python-version ./
 
-# Validate credentials are present (optional debug step)
-RUN test -n "${GITHUB_USERNAME}" || (echo "ERROR: GITHUB_USERNAME is empty" && exit 1)
-RUN test -n "${GITHUB_TOKEN}" || (echo "ERROR: GITHUB_TOKEN is empty" && exit 1)
-
-# Use credentials for git
-RUN git config --global url."https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.ibm.com/".insteadOf "https://github.ibm.com/"
-
 # Install dependencies using Github token authentication
 RUN uv sync --no-cache
 

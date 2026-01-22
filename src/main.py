@@ -10,7 +10,7 @@ from openad_service_utils import (
 from pydantic.v1 import Field
 
 
-class TestMeshPredictor(SimplePredictor):
+class DemoMeshPredictor(SimplePredictor):
     """
     test mesh predictor
     """
@@ -25,7 +25,7 @@ class TestMeshPredictor(SimplePredictor):
     test_x: Optional[float] = Field(0.0, description="A test float parameter")
 
     def setup(self):
-        print("\nSetting up TestMeshPredictor...")
+        print("\nSetting up DemoMeshPredictor...")
 
     def predict(
         self,
@@ -37,7 +37,7 @@ class TestMeshPredictor(SimplePredictor):
             raise ValueError("output_dir must be provided")
 
         input_path = Path(input)  # input for Mesh type is a filepath
-        print("\nRunning prediction in TestMeshPredictor for input:", input_path.name)
+        print("\nRunning prediction in DemoMeshPredictor for input:", input_path.name)
         print("File input path", input_path.absolute().as_posix())
         print("Test parameter test_x:", self.test_x)
 
@@ -45,7 +45,7 @@ class TestMeshPredictor(SimplePredictor):
 
 
 # register the predictor
-TestMeshPredictor.register(no_model=True)
+DemoMeshPredictor.register(no_model=True)
 
 if __name__ == "__main__":
     from openad_service_utils import start_server

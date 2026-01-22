@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: test-wrapper
+  name: demo-mesh-predictor
   namespace: openshift-gitops
 spec:
   project: default
   source:
     repoURL: 'x'
     targetRevision: main
-    path: charts/test-wrapper
+    path: charts/demo-mesh-predictor
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: redis
@@ -19,6 +19,6 @@ spec:
   ignoreDifferences: # ignore differences in image tag to avoid constant out-of-sync status
     - group: apps
       kind: Deployment
-      name: test-wrapper
+      name: demo-mesh-predictor
       jqPathExpressions:
-        - '.spec.template.spec.containers[] | select(.name == "test-wrapper") | .image'
+        - '.spec.template.spec.containers[] | select(.name == "demo-mesh-predictor") | .image'

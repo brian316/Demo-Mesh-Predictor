@@ -15,6 +15,6 @@
     #     value: 
 
 releases:
-  - name: test-wrapper
+  - name: demo-mesh-predictor
     namespace: redis
-    chart: ./test-wrapper
+    chart: ./demo-mesh-predictor

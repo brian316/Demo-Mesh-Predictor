@@ -5,9 +5,13 @@ from openad_service_utils import (
     DomainSubmodule,
     FileResponse,
     PredictorTypes,
-    SimplePredictor,
+    SimplePredictor
 )
 from pydantic.v1 import Field
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class DemoMeshPredictor(SimplePredictor):
@@ -25,7 +29,7 @@ class DemoMeshPredictor(SimplePredictor):
     test_x: Optional[float] = Field(0.0, description="A test float parameter")
 
     def setup(self):
-        print("\nSetting up DemoMeshPredictor...")
+        logger.info("\nSetting up DemoMeshPredictor...")
 
     def predict(
         self,
@@ -37,11 +41,21 @@ class DemoMeshPredictor(SimplePredictor):
             raise ValueError("output_dir must be provided")
 
         input_path = Path(input)  # input for Mesh type is a filepath
-        print("\nRunning prediction in DemoMeshPredictor for input:", input_path.name)
-        print("File input path", input_path.absolute().as_posix())
-        print("Test parameter test_x:", self.test_x)
+        logger.info("\nRunning prediction in DemoMeshPredictor for input:", input_path.name)
+        logger.info("File input path", input_path.absolute().as_posix())
+        logger.info("Test parameter test_x:", self.test_x)
 
-        return FileResponse(file_path=input_path.absolute().as_posix())
+
+        # save input file to output directory as a dummy "prediction"
+        output_path = Path(output_dir)
+        logger.info("Output directory path:", output_path.absolute().as_posix())
+        output_path.mkdir(parents=True, exist_ok=True)
+        output_file_path = output_path / f"predicted_{input_path.name}"
+        with open(input_path, "rb") as src_file:
+            with open(output_file_path, "wb") as dst_file:
+                dst_file.write(src_file.read())
+
+        return FileResponse(file_path=output_file_path.as_posix())
 
 
 # register the predictor
@@ -49,4 +63,4 @@ DemoMeshPredictor.register(no_model=True)
 
 if __name__ == "__main__":
     from openad_service_utils import start_server
-    start_server()
+    start_server(port=8080)

@@ -137,11 +137,11 @@ autoscaling:
   targetMemoryUtilizationPercentage: 80
 
 storage:
-  create: false # Set to true if you want to create a PersistentVolumeClaim
+  create: true # Set to true if you want to create a PersistentVolumeClaim
   name: "test-data-pvc" # unique name for the storage
-  className: ""
+  className: "efs-sc"
   accessMode: ReadWriteMany
-  size: 100Gi
+  size: 10Gi
 
 volumes:
   - name: test-data-pvc

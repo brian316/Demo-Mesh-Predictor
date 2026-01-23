@@ -2,7 +2,7 @@
 
 ### Setup
 
-Install project dependencies
+Install redis locally then install project dependencies
 ```bash
 uv sync
 ```
@@ -21,7 +21,14 @@ python src/main.py
 
 ## Deploy
 
-Deploy with helmfile to cluster
+Install redis on cluster using helm charts see [here](https://github.com/bitnami/charts/tree/main/bitnami/redis)
+
+Get redis password and update `REDIS_PASSWORD` in values.yaml
+```bash
+kubectl get secret --namespace redis redis -o jsonpath="{.data.redis-password}" | base64 -d
+```
+
+Deploy app with helmfile to cluster
 
 ```bash
 helmfile -f charts/helmfile.yaml apply

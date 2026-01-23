@@ -32,7 +32,7 @@ application:
   env:
     - LOGGING_CONFIG_PATH: "/tmp/app.log" # If you want to set a logging path
     - gt4sd_local_cache_path: "/data/.openad_models" # !important mount checkpoints to this Volume
-    - ENABLE_CACHE_RESULTS: "True" # enable cache for inference results, enable only for deterministic 
+    - ENABLE_CACHE_RESULTS: "False" # enable cache for inference results, enable only for deterministic 
     - ASYNC_ALLOW: "True"  # enable async inference
     - WORKER_COUNT: 1
     - AUTO_GARBAGE_COLLECT: True
@@ -109,25 +109,25 @@ resources:
     cpu: 1000m # 1 CPU cores (adjust if necessary)
     memory: "2Gi"
 
-livenessProbe:
-  httpGet:
-    path: /health
-    port: 8081
-  initialDelaySeconds: 10
-  periodSeconds: 15
-  timeoutSeconds: 10
-  successThreshold: 1
-  failureThreshold: 3
+livenessProbe: null
+  # httpGet:
+  #   path: /health
+  #   port: 8081
+  # initialDelaySeconds: 10
+  # periodSeconds: 15
+  # timeoutSeconds: 10
+  # successThreshold: 1
+  # failureThreshold: 3
 
-readinessProbe:
-  httpGet:
-    path: /health
-    port: 8080
-  initialDelaySeconds: 10
-  periodSeconds: 15
-  timeoutSeconds: 10
-  successThreshold: 1
-  failureThreshold: 5
+readinessProbe: null
+  # httpGet:
+  #   path: /health
+  #   port: 8080
+  # initialDelaySeconds: 10
+  # periodSeconds: 15
+  # timeoutSeconds: 10
+  # successThreshold: 1
+  # failureThreshold: 5
 
 autoscaling:
   enabled: false

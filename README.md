@@ -52,7 +52,7 @@ curl -X POST 'localhost:8080/service' \
   "parameters": {
     "property_type": ["DemoMeshPredictor"],
 	"algorithm_version": "v1",
-    "test_x": 1
+    "test_delay": 1
   },
 	"async": true,
 	"file_keys": ["test/dec.vtk"]

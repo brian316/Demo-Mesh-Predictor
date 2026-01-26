@@ -1,4 +1,6 @@
+import logging
 import re
+import time
 from pathlib import Path
 from typing import Any, Dict, Optional, Union
 
@@ -6,11 +8,10 @@ from openad_service_utils import (
     DomainSubmodule,
     FileResponse,
     PredictorTypes,
+    PropertyInfo,
     SimplePredictor,
-    PropertyInfo
 )
 from pydantic.v1 import Field
-import logging
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -28,7 +29,7 @@ class DemoMeshPredictor(SimplePredictor):
     property_type: PredictorTypes = PredictorTypes.MESH
     
     # exposed api override parameters
-    test_x: Optional[float] = Field(0.0, description="A test float parameter")
+    test_delay: Optional[float] = Field(0.0, description="A test delay parameter in seconds")
 
     def setup(self):
         logger.info("\nSetting up DemoMeshPredictor...")
@@ -44,7 +45,10 @@ class DemoMeshPredictor(SimplePredictor):
 
         input_path = Path(input)  # input for Mesh type is a filepath
         logger.info(f"\nRunning prediction in DemoMeshPredictor for input: { input_path.absolute().as_posix()}")
-        logger.info(f"Test parameter test_x: {self.test_x}")
+        logger.info(f"Test parameter test_delay: {self.test_delay}")
+        if self.test_delay and self.test_delay > 0:
+            logger.info(f"Sleeping for {self.test_delay} seconds to simulate delay...")
+            time.sleep(self.test_delay)
 
 
         # save input file to output directory as a dummy "prediction"
